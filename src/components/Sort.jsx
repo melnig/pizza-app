@@ -1,14 +1,16 @@
 import React from "react";
 
-const items = ["popular", "price", "alphabet"];
+const items = [
+  { name: "popular", sortProperty: "rating" },
+  { name: "price", sortProperty: "price" },
+  { name: "alphabet", sortProperty: "title" },
+];
 
-export default function Sort() {
+export default function Sort({ value, onChangeSort }) {
   const [isPopup, setIsPopup] = React.useState(false);
-  const [activeItem, setActiveItem] = React.useState(0);
-  const sortName = items[activeItem];
 
-  const handleChange = (index) => {
-    setActiveItem(index);
+  const handleChange = (i) => {
+    onChangeSort(i);
     setIsPopup(!isPopup);
   };
 
@@ -29,18 +31,20 @@ export default function Sort() {
           />
         </svg>
         <b>Sort by:</b>
-        <span>{sortName}</span>
+        <span>{value.name}</span>
       </div>
       {isPopup && (
         <div className="sort__popup">
           <ul>
-            {items.map((item, index) => (
+            {items.map((obj, index) => (
               <li
                 key={index}
-                onClick={() => handleChange(index)}
-                className={activeItem === index ? "active" : ""}
+                onClick={() => handleChange(obj)}
+                className={
+                  value.sortProperty === obj.sortProperty ? "active" : ""
+                }
               >
-                {item}
+                {obj.name}
               </li>
             ))}
           </ul>
