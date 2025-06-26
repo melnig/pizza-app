@@ -36,15 +36,15 @@ export default function Sort({ value, onChangeSort }) {
       {isPopup && (
         <div className="sort__popup">
           <ul>
-            {items.map((obj, index) => (
+            {items.map((item, index) => (
               <li
                 key={index}
-                onClick={() => handleChange(obj)}
+                onClick={() => handleChange(item)}
                 className={
-                  value.sortProperty === obj.sortProperty ? "active" : ""
+                  value.sortProperty === item.sortProperty ? "active" : ""
                 }
               >
-                {obj.name}
+                {item.name}
               </li>
             ))}
           </ul>

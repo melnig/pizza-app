@@ -4,24 +4,25 @@ import Categories from "../components/Categories";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Sort from "../components/Sort";
+import Pagination from "../components/Pagination";
 
-const Home = () => {
+const Home = ({ searchValue }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [items, setItems] = React.useState([]);
   const [categoryId, setCategoryId] = React.useState(0);
-  const [sortId, setSortId] = React.useState({
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [sortType, setsortType] = React.useState({
     name: "popular",
     sortProperty: "rating",
   });
 
-  console.log(categoryId, sortId);
-
   React.useEffect(() => {
     setIsLoading(true);
-    const categoryParam = categoryId > 0 ? `category=${categoryId}` : "";
-    const sortProperty = sortId.sortProperty.replace("-", "");
+    const category = categoryId > 0 ? `category=${categoryId}` : "";
+    const search = searchValue ? `&search=${searchValue}` : "";
+    const sort = sortType.sortProperty;
 
-    const url = `https://685a49519f6ef9611155b072.mockapi.io/items?${categoryParam}&sortBy=${sortProperty}`;
+    const url = `https://685a49519f6ef9611155b072.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sort}${search}`;
     fetch(url)
       .then((res) => {
         const data = res.json();
@@ -33,7 +34,13 @@ const Home = () => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sortId]);
+  }, [categoryId, sortType, searchValue, currentPage]);
+
+  const pizzas = items.map((item) => <PizzaBlock key={item.id} {...item} />);
+  const skeletons = [...new Array(8)].map((_, index) => (
+    <Skeleton key={index} />
+  ));
+
   return (
     <div className="container">
       <div className="content__top">
@@ -44,14 +51,11 @@ const Home = () => {
       </div>
       <div className="content-title__block">
         <h2 className="content__title">All pizza</h2>
-        <Sort value={sortId} onChangeSort={(i) => setSortId(i)} />
+        <Sort value={sortType} onChangeSort={(i) => setsortType(i)} />
       </div>
 
-      <div className="content__items">
-        {isLoading
-          ? [...new Array(8)].map((_, index) => <Skeleton key={index} />)
-          : items.map((item) => <PizzaBlock key={item.id} {...item} />)}
-      </div>
+      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      <Pagination onChangePage={(number) => setCurrentPage(number)} />
     </div>
   );
 };

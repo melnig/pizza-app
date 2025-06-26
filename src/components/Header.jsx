@@ -1,19 +1,22 @@
+import Search from "./Search";
+
 import { NavLink } from "react-router";
 
 import pizzaLogo from "../assets/img/pizza-logo.png";
 
-export default function Header() {
+export default function Header({ searchValue, setSearchValue }) {
   return (
     <div className="header">
       <div className="container">
-        <div className="header__logo">
-          <NavLink to="/">
+        <NavLink to="/">
+          <div className="header__logo">
             <img width="68" src={pizzaLogo} alt="Pizza logo" />
-          </NavLink>
-        </div>
+          </div>
+        </NavLink>
+        <Search searchValue={searchValue} setSearchValue={setSearchValue} />
         <div className="header__cart">
           <NavLink to="/cart" className="button button--cart">
-            <span>520 ₴</span>
+            <span>0 ₴</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -44,7 +47,7 @@ export default function Header() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>3</span>
+            <span>0</span>
           </NavLink>
         </div>
       </div>

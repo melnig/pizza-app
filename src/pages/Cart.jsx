@@ -36,7 +36,7 @@ const Cart = () => {
                 stroke-linejoin="round"
               />
             </svg>
-            Корзина
+            Cart
           </h2>
           <div class="cart__clear">
             <svg
@@ -76,7 +76,7 @@ const Cart = () => {
               />
             </svg>
 
-            <span>Очистить корзину</span>
+            <span>Clear cart</span>
           </div>
         </div>
         <div class="content__items">
@@ -89,8 +89,8 @@ const Cart = () => {
               />
             </div>
             <div class="cart__item-info">
-              <h3>Сырный цыпленок</h3>
-              <p>тонкое тесто, 26 см.</p>
+              <h3>Chezze chicken</h3>
+              <p>thin, 26 sm.</p>
             </div>
             <div class="cart__item-count">
               <div class="button button--outline button--circle cart__item-count-minus">
@@ -132,7 +132,7 @@ const Cart = () => {
               </div>
             </div>
             <div class="cart__item-price">
-              <b>770 ₽</b>
+              <b>770 ₴</b>
             </div>
             <div class="cart__item-remove">
               <div class="button button--outline button--circle">
@@ -160,11 +160,11 @@ const Cart = () => {
           <div class="cart__bottom-details">
             <span>
               {" "}
-              Всего пицц: <b>3 шт.</b>{" "}
+              Total pizzas: <b>3 pi.</b>{" "}
             </span>
             <span>
               {" "}
-              Сумма заказа: <b>900 ₽</b>{" "}
+              Order amount: <b>900 ₴</b>{" "}
             </span>
           </div>
           <div class="cart__bottom-buttons">
@@ -185,10 +185,10 @@ const Cart = () => {
                 />
               </svg>
 
-              <Link to="/">Вернуться назад</Link>
+              <Link to="/">Go back</Link>
             </a>
             <div class="button pay-btn">
-              <span>Оплатить сейчас</span>
+              <span>Pay now</span>
             </div>
           </div>
         </div>
