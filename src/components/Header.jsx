@@ -4,7 +4,7 @@ import { NavLink } from "react-router";
 
 import pizzaLogo from "../assets/img/pizza-logo.png";
 
-export default function Header({ searchValue, setSearchValue }) {
+export default function Header() {
   return (
     <div className="header">
       <div className="container">
@@ -13,7 +13,7 @@ export default function Header({ searchValue, setSearchValue }) {
             <img width="68" src={pizzaLogo} alt="Pizza logo" />
           </div>
         </NavLink>
-        <Search searchValue={searchValue} setSearchValue={setSearchValue} />
+        <Search />
         <div className="header__cart">
           <NavLink to="/cart" className="button button--cart">
             <span>0 ₴</span>

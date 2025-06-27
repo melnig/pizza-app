@@ -5,8 +5,10 @@ import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Sort from "../components/Sort";
 import Pagination from "../components/Pagination";
+import { SearchContext } from "../App";
 
-const Home = ({ searchValue }) => {
+const Home = () => {
+  const { searchValue } = React.useContext(SearchContext);
   const [isLoading, setIsLoading] = React.useState(true);
   const [items, setItems] = React.useState([]);
   const [categoryId, setCategoryId] = React.useState(0);
@@ -17,23 +19,34 @@ const Home = ({ searchValue }) => {
   });
 
   React.useEffect(() => {
-    setIsLoading(true);
-    const category = categoryId > 0 ? `category=${categoryId}` : "";
-    const search = searchValue ? `&search=${searchValue}` : "";
-    const sort = sortType.sortProperty;
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const category = categoryId > 0 ? `category=${categoryId}` : "";
+        const search = searchValue
+          ? `&search=${encodeURIComponent(searchValue)}`
+          : "";
+        const sort = sortType.sortProperty;
 
-    const url = `https://685a49519f6ef9611155b072.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sort}${search}`;
-    fetch(url)
-      .then((res) => {
-        const data = res.json();
+        const url = `https://685a49519f6ef9611155b072.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sort}${search}`;
 
-        return data;
-      })
-      .then((data) => {
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
         setItems(data);
+      } catch (error) {
+        console.error("❌ Error fetching data:", error);
+        setItems([]); // або покажи повідомлення користувачу
+      } finally {
         setIsLoading(false);
-      });
-    window.scrollTo(0, 0);
+      }
+      window.scrollTo(0, 0);
+    };
+
+    fetchData();
   }, [categoryId, sortType, searchValue, currentPage]);
 
   const pizzas = items.map((item) => <PizzaBlock key={item.id} {...item} />);
