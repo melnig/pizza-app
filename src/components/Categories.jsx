@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function Categories({ value, onChangeCategory }) {
-  const categories = ["All", "Meat", "Vegan", "Grill", "Hot", "Closed"];
+const categories = ["All", "Meat", "Vegan", "Grill", "Hot", "Closed"];
 
+export default function Categories({ categoryId, onChangeCategory }) {
   return (
     <div className="categories">
       <ul>
@@ -10,7 +10,7 @@ export default function Categories({ value, onChangeCategory }) {
           <li
             key={index}
             onClick={() => onChangeCategory(index)}
-            className={value === index ? "active" : ""}
+            className={categoryId === index ? "active" : ""}
           >
             {categoryName}
           </li>

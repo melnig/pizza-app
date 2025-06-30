@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSortValue } from "../redux/slices/sortSlice";
 
 const items = [
   { name: "popular", sortProperty: "rating" },
@@ -6,11 +8,13 @@ const items = [
   { name: "alphabet", sortProperty: "title" },
 ];
 
-export default function Sort({ value, onChangeSort }) {
+export default function Sort() {
+  const dispatch = useDispatch();
+  const value = useSelector((state) => state.sort);
   const [isPopup, setIsPopup] = React.useState(false);
 
-  const handleChange = (i) => {
-    onChangeSort(i);
+  const handleChange = (obj) => {
+    dispatch(setSortValue(obj));
     setIsPopup(!isPopup);
   };
 

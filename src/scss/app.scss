@@ -38,15 +38,19 @@ body {
     align-items: center;
     @media (max-width: 1440px) {
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(3, 1fr);
+      grid-template-rows: repeat(1, 1fr);
       grid-column-gap: 16px;
       grid-row-gap: 16px;
     }
     @media (max-width: 1136px) {
       grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(1, 1fr);
     }
     @media (max-width: 796px) {
-      grid-template-columns: repeat(1, 1fr);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   }
 
