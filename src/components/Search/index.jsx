@@ -1,10 +1,33 @@
 import React from "react";
+import debounce from "lodash.debounce";
 
 import styles from "./Search.module.scss";
 import { SearchContext } from "../../App";
 
 const Search = () => {
-  const { searchValue, setSearchValue } = React.useContext(SearchContext);
+  const [value, setValue] = React.useState("");
+  const { setSearchValue } = React.useContext(SearchContext);
+  const inputRef = React.useRef();
+
+  const onClickClear = () => {
+    setValue("");
+    setSearchValue("");
+    inputRef.current.focus();
+  };
+
+  const updateSearchValue = React.useCallback(
+    debounce((str) => {
+      setSearchValue(str);
+      console.log(str);
+    }, 500),
+    []
+  );
+
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
+    updateSearchValue(e.target.value);
+  };
+
   return (
     <div className={styles.root}>
       <svg
@@ -22,13 +45,14 @@ const Search = () => {
         />
       </svg>
       <input
-        value={searchValue}
+        ref={inputRef}
+        value={value}
         name="search"
         className={styles.input}
         placeholder="Enter pizza..."
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={onChangeInput}
       />
-      {searchValue && (
+      {value && (
         <svg
           className={styles.clearIcon}
           xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +60,7 @@ const Search = () => {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          onClick={() => setSearchValue("")}
+          onClick={onClickClear}
         >
           <path
             strokeLinecap="round"

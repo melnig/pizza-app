@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import Categories from "../components/Categories";
 import PizzaBlock from "../components/PizzaBlock";
@@ -36,13 +37,8 @@ const Home = () => {
 
         const url = `https://685a49519f6ef9611155b072.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sort}${search}`;
 
-        const res = await fetch(url);
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
-        const data = await res.json();
-        setItems(data);
+        const res = await axios.get(url);
+        setItems(res.data);
       } catch (error) {
         console.error("❌ Error fetching data:", error);
         setItems([]); // або покажи повідомлення користувачу
