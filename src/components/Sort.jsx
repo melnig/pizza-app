@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSortValue } from "../redux/slices/sortSlice";
+import { setSortValue } from "../redux/slices/filterSlice";
 
-const items = [
+export const sortItems = [
   { name: "popular", sortProperty: "rating" },
   { name: "price", sortProperty: "price" },
   { name: "alphabet", sortProperty: "title" },
@@ -10,7 +10,7 @@ const items = [
 
 export default function Sort() {
   const dispatch = useDispatch();
-  const value = useSelector((state) => state.sort);
+  const value = useSelector((state) => state.filter.sortOption);
   const [isPopup, setIsPopup] = React.useState(false);
 
   const handleChange = (obj) => {
@@ -40,7 +40,7 @@ export default function Sort() {
       {isPopup && (
         <div className="sort__popup">
           <ul>
-            {items.map((item, index) => (
+            {sortItems.map((item, index) => (
               <li
                 key={index}
                 onClick={() => handleChange(item)}
