@@ -62,6 +62,7 @@ const Home = () => {
     window.scrollTo(0, 0);
   };
 
+  // Читання параметрів з URL при першому рендері. Ініціалізація стану фільтрації на основі URL при завантаженні сторінки.
   React.useEffect(() => {
     if (window.location.search && !isSearchParamsApplied.current) {
       const params = qs.parse(window.location.search.substring(1));
@@ -79,6 +80,7 @@ const Home = () => {
     }
   }, []);
 
+  // Запуск fetchData, якщо немає параметрів з URL. Завантаження даних на основі поточного стану, якщо не було URL-синхронізації.
   React.useEffect(() => {
     if (!isSearchParamsApplied.current) {
       fetchData();
@@ -86,6 +88,7 @@ const Home = () => {
     isSearchParamsApplied.current = false;
   }, [categoryId, sortOption, searchValue, currentPage]);
 
+  // Синхронізація стану з URL. Автоматична синхронізація фільтрів з URL при зміні стану, але не під час першого рендеру.
   React.useEffect(() => {
     const queryString = qs.stringify({
       sortProperty: sortOption.sortProperty,

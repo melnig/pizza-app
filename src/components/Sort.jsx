@@ -12,14 +12,28 @@ export default function Sort() {
   const dispatch = useDispatch();
   const value = useSelector((state) => state.filter.sortOption);
   const [isPopup, setIsPopup] = React.useState(false);
+  const sortRef = React.useRef();
 
   const handleChange = (obj) => {
     dispatch(setSortValue(obj));
     setIsPopup(!isPopup);
   };
 
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
+        setIsPopup(false); // Ховаємо попап
+      }
+    };
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleChange);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label" onClick={() => setIsPopup(!isPopup)}>
         <svg
           className={!isPopup ? "sort__arrow-open" : ""}
