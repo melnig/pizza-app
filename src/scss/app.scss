@@ -67,7 +67,7 @@ body {
 
   &--cart {
     max-width: 820px;
-    margin: 90px auto;
+
     .content__title {
       margin: 0;
     }
@@ -265,6 +265,9 @@ body {
         align-items: center;
         justify-content: center;
         width: 210px;
+        a {
+          font-size: 18px;
+        }
 
         border-color: darken($color: $gray-line, $amount: 10);
 
@@ -326,7 +329,7 @@ body {
     img {
       display: block;
       width: 300px;
-      margin: 45px auto 60px;
+      margin: 45px auto 20px;
     }
 
     .button--black {

@@ -153,4 +153,12 @@
       margin: 20px 0;
     }
   }
+  &--back {
+    padding: 12px 25px;
+  }
+}
+.go-back-btn:hover {
+  a {
+    color: #fff;
+  }
 }
