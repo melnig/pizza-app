@@ -11,9 +11,9 @@ export default function CartEmpty() {
             Cart is empty <icon>😕</icon>
           </h2>
           <p>
-            Вероятней всего, вы не заказывали ещё пиццу.
+            Most likely, you haven't ordered a pizza yet.
             <br />
-            Для того, чтобы заказать пиццу, перейди на главную страницу.
+            To order a pizza, go to the main page.
           </p>
           <img src={img} alt="Empty cart" />
           <Link to="/" class="button button--back">
