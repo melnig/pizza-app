@@ -145,11 +145,11 @@ body {
       display: flex;
       align-items: center;
       margin-right: 15px;
-      width: 10%;
+      width: 20%;
 
       img {
-        width: 80px;
-        height: 80px;
+        width: 100%;
+        height: 100px;
       }
     }
 
@@ -238,7 +238,7 @@ body {
   }
 
   &__bottom {
-    margin: 50px 0;
+    margin: 20px 0;
 
     &-details {
       display: flex;
@@ -338,6 +338,107 @@ body {
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;
+    }
+  }
+}
+
+@media (max-width: 796px) {
+  .cart {
+    padding: 0 15px;
+
+    &__item {
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      margin-top: 20px;
+
+      &-img {
+        margin: 0 auto;
+        width: auto;
+
+        img {
+          width: 280px;
+          height: 200px;
+        }
+      }
+
+      &-info {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 15px;
+
+        h3 {
+          font-size: 24px;
+        }
+
+        p {
+          font-size: 16px;
+        }
+      }
+
+      &-count,
+      &-price,
+      &-remove {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+      &-count {
+        b {
+          padding: 8px;
+        }
+      }
+
+      &-remove {
+        justify-content: center;
+      }
+    }
+
+    &__bottom {
+      &-details {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        span {
+          font-size: 20px;
+        }
+      }
+
+      &-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+
+        .go-back-btn,
+        .pay-btn {
+          width: 100%;
+          max-width: 280px;
+        }
+      }
+    }
+
+    &--empty {
+      width: 100%;
+      padding: 0 15px;
+
+      h2 {
+        font-size: 26px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      img {
+        width: 220px;
+      }
+
+      .button--black {
+        width: 100%;
+        max-width: 240px;
+        font-size: 16px;
+      }
     }
   }
 }
