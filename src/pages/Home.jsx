@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router";
 
@@ -16,11 +15,13 @@ import {
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
+import { fetchData } from "../redux/slices/pizzasSlice";
 
 const Home = () => {
   const { categoryId, sortOption, currentPage } = useSelector(
     (state) => state.filter
   );
+  const { items, isLoading, status } = useSelector((state) => state.pizzas);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,8 +30,6 @@ const Home = () => {
   const isSearchParamsApplied = React.useRef(false);
 
   const { searchValue } = React.useContext(SearchContext);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [items, setItems] = React.useState([]);
 
   const onChangeCategory = (index) => {
     dispatch(setCategoryValue(index));
@@ -40,25 +39,22 @@ const Home = () => {
     dispatch(setCurrentPage(number));
   };
 
-  const fetchData = async () => {
-    try {
-      setIsLoading(true);
-      const category = categoryId > 0 ? `category=${categoryId}` : "";
-      const search = searchValue
-        ? `&search=${encodeURIComponent(searchValue)}`
-        : "";
-      const sort = sortOption.sortProperty;
+  const loadPizzas = async () => {
+    const category = categoryId > 0 ? `category=${categoryId}` : "";
+    const search = searchValue
+      ? `&search=${encodeURIComponent(searchValue)}`
+      : "";
+    const sort = sortOption.sortProperty;
 
-      const url = `https://685a49519f6ef9611155b072.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sort}${search}`;
+    dispatch(
+      fetchData({
+        currentPage,
+        category,
+        sort,
+        search,
+      })
+    );
 
-      const res = await axios.get(url);
-      setItems(res.data);
-    } catch (error) {
-      console.error("❌ Error fetching data:", error);
-      setItems([]); // або покажи повідомлення користувачу
-    } finally {
-      setIsLoading(false);
-    }
     window.scrollTo(0, 0);
   };
 
@@ -80,10 +76,10 @@ const Home = () => {
     }
   }, []);
 
-  // Запуск fetchData, якщо немає параметрів з URL. Завантаження даних на основі поточного стану, якщо не було URL-синхронізації.
+  // Запуск loadPizzas, якщо немає параметрів з URL. Завантаження даних на основі поточного стану, якщо не було URL-синхронізації.
   React.useEffect(() => {
     if (!isSearchParamsApplied.current) {
-      fetchData();
+      loadPizzas();
     }
     isSearchParamsApplied.current = false;
   }, [categoryId, sortOption, searchValue, currentPage]);
@@ -121,7 +117,13 @@ const Home = () => {
         <h2 className="content__title">All pizza</h2>
         <Sort />
       </div>
-
+      {status === "error" && (
+        <div className="content__error-info">
+          <span>😕</span>
+          <h2>Error loading pizzas</h2>
+          <p>Please try again later.</p>
+        </div>
+      )}
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
